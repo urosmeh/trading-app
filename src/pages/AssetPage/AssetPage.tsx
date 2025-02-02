@@ -1,21 +1,22 @@
 import { NavLink, useParams } from 'react-router';
 import { AppRoutes } from '../../constants/appRoutes.ts';
 import AssetDetails from '../../components/AssetDetails/AssetDetails.tsx';
+import PageContainer from '../../components/PageContainer/PageContainer.tsx';
 
 const AssetPage = () => {
   const { assetId } = useParams();
 
   if (!assetId)
     return (
-      <div>
+      <PageContainer>
         No asset id provided. <NavLink to={AppRoutes.HOME}>Back home</NavLink>
-      </div>
+      </PageContainer>
     );
 
   return (
-    <div>
+    <PageContainer>
       <AssetDetails assetId={assetId} />
-    </div>
+    </PageContainer>
   );
 };
 
