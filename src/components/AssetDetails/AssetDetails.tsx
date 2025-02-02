@@ -4,6 +4,7 @@ import AssetChart from '../AssetChart/AssetChart.tsx';
 import { useRef } from 'react';
 import CloseIcon from '../../assets/closeIcon.svg';
 import AssetRate from '../AssetRate/AssetRate.tsx';
+import BSDButton from '../BSDButton/BSDButton.tsx';
 
 type AssetDetailsProps = {
   assetId: string;
@@ -24,12 +25,10 @@ const AssetDetails = ({ assetId }: AssetDetailsProps) => {
     <div className={classes.details}>
       <AssetRate assetId={assetId} />
       <AssetChart data={data} />
-      <button
-        className={classes.button}
+      <BSDButton
+        title={'Trade'}
         onClick={() => dialogRef?.current?.showModal()}
-      >
-        Trade
-      </button>
+      />
 
       {/*  todo: refactor !*/}
       <dialog className={classes.modal} ref={dialogRef}>
@@ -37,9 +36,8 @@ const AssetDetails = ({ assetId }: AssetDetailsProps) => {
           <img src={CloseIcon} alt={'close icon'} />
         </span>
         <form method="dialog">
-          <button onClick={() => dialogRef?.current?.close()}>OK</button>
-          <button className={classes.button}>Buy</button>
-          <button className={classes.button}>Sell</button>
+          <BSDButton title={'Buy'} />
+          <BSDButton title={'Sell'} />
         </form>
       </dialog>
     </div>
