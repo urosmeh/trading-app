@@ -4,6 +4,7 @@ import {
   ChartHistoryEventList,
   ChartIntervals,
   CoincapResponse,
+  Rate,
 } from '../../models/coincap.ts';
 
 const apiUrl =
@@ -45,6 +46,18 @@ export const getAssetChartData = async (
 
   const result =
     (await response.json()) as CoincapResponse<ChartHistoryEventList>;
+
+  return result.data;
+};
+
+export const getAssetRate = async (assetId: string) => {
+  const response = await fetch(`${apiUrl}${ApiRoutes.RATES}/${assetId}`);
+
+  if (!response.ok) {
+    throw new Error(response.statusText);
+  }
+
+  const result = (await response.json()) as CoincapResponse<Rate>;
 
   return result.data;
 };

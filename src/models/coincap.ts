@@ -22,3 +22,10 @@ export type ChartHistoryEvent = {
 };
 
 export type ChartHistoryEventList = ChartHistoryEvent[];
+
+export type Rate = {
+  id: string;
+  symbol: string;
+  currencySymbol: string;
+  rateUsd: string;
+};

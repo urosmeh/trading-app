@@ -3,6 +3,7 @@ import classes from './AssetDetails.module.css';
 import AssetChart from '../AssetChart/AssetChart.tsx';
 import { useRef } from 'react';
 import CloseIcon from '../../assets/closeIcon.svg';
+import AssetRate from '../AssetRate/AssetRate.tsx';
 
 type AssetDetailsProps = {
   assetId: string;
@@ -21,7 +22,7 @@ const AssetDetails = ({ assetId }: AssetDetailsProps) => {
 
   return (
     <div className={classes.details}>
-      {/*  todo: asset rates*/}
+      <AssetRate assetId={assetId} />
       <AssetChart data={data} />
       <button
         className={classes.button}
