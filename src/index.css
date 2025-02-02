@@ -1,2 +1,32 @@
 :root {
+  --primary: #153243;
+  --background: #ffffff;
+  --font: #000000;
+  --font-asset: #202020;
+  --backdrop: #0000005c;
+}
+
+* {
+  font-family: 'Open Sans', sans-serif;
+  color: var(--font);
+  /*font-size: 1vw;*/
+}
+
+p {
+  margin: 0;
+}
+
+html,
+body {
+  height: 100%;
+}
+
+body {
+  /*width: 100%;*/
+  margin: 0;
+  /*display: flex;*/
+  /*place-items: start;*/
+  min-width: 320px;
+  min-height: 100vh;
+  background-color: var(--background);
 }
