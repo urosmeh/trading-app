@@ -1,0 +1,8 @@
+.chart {
+  /*try without this*/
+  /*margin: 24px;*/
+  width: 90% !important;
+  height: 33% !important;
+  /*width: 400px !important;*/
+  /*height: 200px !important;*/
+}

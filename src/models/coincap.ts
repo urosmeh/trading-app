@@ -10,3 +10,22 @@ export type Asset = {
 };
 
 export type AssetList = Asset[];
+
+export enum ChartIntervals {
+  ONE_DAY = 'd1',
+  ONE_HOUR = 'h1',
+}
+
+export type ChartHistoryEvent = {
+  priceUsd: string;
+  time: string;
+};
+
+export type ChartHistoryEventList = ChartHistoryEvent[];
+
+export type Rate = {
+  id: string;
+  symbol: string;
+  currencySymbol: string;
+  rateUsd: string;
+};
