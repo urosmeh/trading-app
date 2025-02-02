@@ -14,6 +14,6 @@ export const getAssets = async (search: string) => {
   }
 
   const result = (await response.json()) as CoincapResponse<AssetList>;
-
+  console.log(result.data);
   return result.data;
 };
