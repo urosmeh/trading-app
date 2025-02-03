@@ -4,6 +4,9 @@
   --font: #000000;
   --font-asset: #202020;
   --backdrop: #0000005c;
+  --accent: #0099cc;
+  --input-background: #0000000a;
+  --input-border: #0000003d;
 }
 
 * {
@@ -29,4 +32,12 @@ body {
   min-width: 320px;
   min-height: 100vh;
   background-color: var(--background);
+}
+
+dialog {
+  border: none;
+  border-radius: 12px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
 }
