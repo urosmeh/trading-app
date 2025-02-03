@@ -1,0 +1,35 @@
+.inputWrapper {
+  background: var(--input-background);
+  padding: 10px;
+  border-radius: 8px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.inputField {
+  flex: 1;
+  border: none;
+  background: transparent;
+  font-size: 18px;
+  text-align: right;
+  border-bottom: 1px solid var(--input-border);
+  outline: none;
+}
+
+.currency {
+  color: var(--accent);
+  font-weight: bold;
+  margin-left: 10px;
+}
+
+/*this hides arrows in input*/
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+input[type='number'] {
+  -moz-appearance: textfield;
+}
