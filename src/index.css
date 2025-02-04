@@ -8,6 +8,8 @@
   --input-background: #0000000a;
   --input-border: #0000003d;
   --card-background: #f3f3f3;
+  --pnl-profit: #00bf13;
+  --pnl-loss: #f64242;
 }
 
 * {

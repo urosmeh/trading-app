@@ -1,0 +1,12 @@
+.text {
+  font-weight: 600;
+  font-size: 24px;
+}
+
+.pnlProfit {
+  color: var(--pnl-profit);
+}
+
+.pnlLoss {
+  color: var(--pnl-loss);
+}

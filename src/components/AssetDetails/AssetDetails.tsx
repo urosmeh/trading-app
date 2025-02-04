@@ -1,4 +1,4 @@
-import { useGetAssetChartData } from '../../api/hooks';
+import { useGetAssetChartData, useGetAssetRate } from '../../api/hooks';
 import classes from './AssetDetails.module.css';
 import AssetChart from '../AssetChart/AssetChart.tsx';
 import { useCallback, useState } from 'react';
@@ -17,8 +17,11 @@ type AssetDetailsProps = {
 const AssetDetails = ({ assetId }: AssetDetailsProps) => {
   const [modalOpen, setModalOpen] = useState(false);
   const { data, isLoading, error } = useGetAssetChartData(assetId);
+  const { data: rateData } = useGetAssetRate(assetId);
 
-  const rate = parseFloat('100993.6797');
+  const rate = parseFloat(rateData?.rateUsd || '0');
+  const assetAbbr = rateData?.symbol || assetId;
+
   const { fiatValue, cryptoValue, calculateRate, reset } =
     useFiatCryptoValue(rate);
   const { addTradeHistory } = useStore();
@@ -29,8 +32,8 @@ const AssetDetails = ({ assetId }: AssetDetailsProps) => {
       //if user clicks Sell, it will sell the asset and "buy" eur
 
       //todo: instead of asset id pass in asset abbr (bitcoin -> BTC)
-      const assetSold = type === 'buy' ? 'EUR' : assetId;
-      const assetBought = type === 'buy' ? assetId : 'EUR';
+      const assetSold = type === 'buy' ? 'EUR' : assetAbbr;
+      const assetBought = type === 'buy' ? assetAbbr : 'EUR';
       const sellAmount =
         type === 'buy' ? parseFloat(fiatValue) : parseFloat(cryptoValue);
       const buyAmount =
@@ -39,6 +42,7 @@ const AssetDetails = ({ assetId }: AssetDetailsProps) => {
       addTradeHistory({
         type,
         rate,
+        assetId,
         assetBought,
         assetSold,
         timestamp: new Date().getTime(),
@@ -49,7 +53,7 @@ const AssetDetails = ({ assetId }: AssetDetailsProps) => {
       reset();
       setModalOpen(false);
     },
-    [cryptoValue, fiatValue, assetId, addTradeHistory, rate, reset]
+    [cryptoValue, fiatValue, assetId, addTradeHistory, rate, reset, assetAbbr]
   );
 
   if (isLoading) return <div>Loading...</div>;
@@ -58,6 +62,7 @@ const AssetDetails = ({ assetId }: AssetDetailsProps) => {
   //todo: Add retries!!!
   //todo: fix tooltip label
   //todo: trade history
+  //todo: form validation
   if (error) return <div>There's been an error</div>;
 
   return (
@@ -65,7 +70,7 @@ const AssetDetails = ({ assetId }: AssetDetailsProps) => {
       <AssetRate assetId={assetId} />
       <AssetChart data={data} />
       <BSDButton title={'Trade'} onClick={() => setModalOpen(true)} fullWidth />
-      <TradeHistory />
+      <TradeHistory assetId={assetId} />
       <Modal isOpen={modalOpen} onClose={() => setModalOpen(false)}>
         <form method="dialog" className={classes.form}>
           <div className={classes.inputs}>
@@ -75,7 +80,7 @@ const AssetDetails = ({ assetId }: AssetDetailsProps) => {
               onChange={(e) => calculateRate('fiat', e.target.value)}
             />
             <BSDInput
-              currency={'BTC'}
+              currency={assetAbbr}
               value={cryptoValue}
               onChange={(e) => calculateRate('crypto', e.target.value)}
             />

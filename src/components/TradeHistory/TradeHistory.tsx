@@ -1,10 +1,34 @@
 import { formatTime } from '../../utils/timeUtils.ts';
-import useStore from '../../stores/useStore.ts';
+import useStore, { Trade } from '../../stores/useStore.ts';
 import classes from './TradeHistory.module.css';
 
-const TradeHistory = () => {
-  //todo: asset id as param and filter history if assetBought/assetSold === assetId
-  const { tradeHistory } = useStore();
+type TradeHistoryProps = {
+  assetId: string;
+};
+
+const TradeHistory = ({ assetId }: TradeHistoryProps) => {
+  const { getTradeHistory } = useStore();
+
+  const tradeHistory = getTradeHistory(assetId);
+
+  const renderAmount = (trade: Trade) => {
+    switch (trade.type) {
+      case 'buy': {
+        return (
+          <p className={classes.amount}>
+            +{trade.buyAmount} {trade.assetBought} / -{trade.sellAmount} €
+          </p>
+        );
+      }
+      case 'sell': {
+        return (
+          <p className={classes.amount}>
+            -{trade.sellAmount} {trade.assetSold} / +{trade.buyAmount} €
+          </p>
+        );
+      }
+    }
+  };
 
   return (
     <div className={classes.container}>
@@ -12,9 +36,7 @@ const TradeHistory = () => {
         tradeHistory.map((trade) => (
           <div className={classes.trade} key={trade.timestamp}>
             <p className={classes.type}>{trade.type}</p>
-            <p className={classes.amount}>
-              +{trade.buyAmount} {trade.assetBought} / -{trade.sellAmount} €
-            </p>
+            {renderAmount(trade)}
             <p>{formatTime(trade.timestamp)}</p>
           </div>
         ))
