@@ -10,7 +10,6 @@ const HomePage = () => {
 
   return (
     <PageContainer>
-      <p>Search for a coin to trade (i.e ethereum)</p>
       <SearchCoins search={search} setSearch={setSearch} />
       <AssetList search={debouncedSearch} />
     </PageContainer>

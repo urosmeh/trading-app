@@ -1,0 +1,16 @@
+.modal {
+  border: none;
+  border-radius: 12px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.modal::backdrop {
+  background-color: var(--backdrop);
+}
+
+.close {
+  cursor: pointer;
+  align-self: flex-end;
+}

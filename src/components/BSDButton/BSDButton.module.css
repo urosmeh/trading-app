@@ -1,0 +1,14 @@
+.button {
+  background-color: var(--primary);
+  border-radius: 4px;
+  font-size: 16px;
+  font-weight: 600;
+  height: 48px;
+  color: var(--background);
+  border: none;
+  cursor: pointer;
+}
+
+.fullWidth {
+  width: 100%;
+}

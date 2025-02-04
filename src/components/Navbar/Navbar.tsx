@@ -1,7 +1,10 @@
 import classes from './Navbar.module.css';
 import { memo } from 'react';
+import useStore from '../../stores/useStore.ts';
 
 const Navbar = () => {
+  const { funds } = useStore();
+
   return (
     <nav className={classes.navbar}>
       <div>
@@ -9,8 +12,8 @@ const Navbar = () => {
       </div>
       <div className={classes.funds}>
         <p>Available</p>
-        <p>100 BTC</p>
-        <p>224,01 €</p>
+        <p>{funds.btc} BTC</p>
+        <p>{funds.fiat}</p>
       </div>
     </nav>
   );

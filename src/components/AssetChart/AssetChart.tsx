@@ -20,11 +20,9 @@ const AssetChart = ({ data }: AssetChartProps) => {
           bottom: 0,
           left: 0,
         }}
-        {
-          ...{
-            // overflow: 'visible',
-          }
-        }
+        {...{
+          overflow: 'visible',
+        }}
       >
         <defs>
           <linearGradient

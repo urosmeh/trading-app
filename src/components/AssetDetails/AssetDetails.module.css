@@ -7,35 +7,26 @@
   gap: 24px;
 }
 
-.button {
-  background-color: var(--primary);
-  border-radius: 4px;
-  font-size: 16px;
-  font-weight: 600;
-  height: 48px;
-  color: var(--background);
-  border: none;
-  width: 100%;
-  cursor: pointer;
+.form {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
 }
 
-.modal {
-  border: none;
-  border-radius: 12px;
+.inputs {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
 }
 
-.modal::backdrop {
-  background-color: var(--backdrop);
+.actions {
+  display: flex;
+  gap: 24px;
 }
 
 /*todo: fix this!*/
-
 @media (min-width: 768px) {
   .navbar {
     padding: 32px;
-  }
-
-  .button {
-    width: 320px !important;
   }
 }
