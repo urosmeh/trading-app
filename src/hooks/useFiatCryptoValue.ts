@@ -31,10 +31,16 @@ const useFiatCryptoValue = (rate: number) => {
     [rate]
   );
 
+  const reset = useCallback(() => {
+    setCryptoValue('');
+    setFiatValue('');
+  }, []);
+
   return {
     cryptoValue,
     fiatValue,
     calculateRate,
+    reset,
   };
 };
 

@@ -8,6 +8,7 @@ import BSDInput from '../BSDInput/BSDInput.tsx';
 import Modal from '../Modal/Modal.tsx';
 import useFiatCryptoValue from '../../hooks/useFiatCryptoValue.ts';
 import useStore from '../../stores/useStore.ts';
+import TradeHistory from '../TradeHistory/TradeHistory.tsx';
 
 type AssetDetailsProps = {
   assetId: string;
@@ -18,13 +19,16 @@ const AssetDetails = ({ assetId }: AssetDetailsProps) => {
   const { data, isLoading, error } = useGetAssetChartData(assetId);
 
   const rate = parseFloat('100993.6797');
-  const { fiatValue, cryptoValue, calculateRate } = useFiatCryptoValue(rate);
+  const { fiatValue, cryptoValue, calculateRate, reset } =
+    useFiatCryptoValue(rate);
   const { addTradeHistory } = useStore();
 
   const handleTrade = useCallback(
     (type: 'buy' | 'sell') => {
       //based on design i am assuming that if user clicks Buy, it will buy 220,23 worth of btc -> asset sold = EUR
       //if user clicks Sell, it will sell the asset and "buy" eur
+
+      //todo: instead of asset id pass in asset abbr (bitcoin -> BTC)
       const assetSold = type === 'buy' ? 'EUR' : assetId;
       const assetBought = type === 'buy' ? assetId : 'EUR';
       const sellAmount =
@@ -42,9 +46,10 @@ const AssetDetails = ({ assetId }: AssetDetailsProps) => {
         buyAmount,
       });
 
-      //todo: update funds
+      reset();
+      setModalOpen(false);
     },
-    [cryptoValue, fiatValue, assetId, addTradeHistory, rate]
+    [cryptoValue, fiatValue, assetId, addTradeHistory, rate, reset]
   );
 
   if (isLoading) return <div>Loading...</div>;
@@ -59,7 +64,8 @@ const AssetDetails = ({ assetId }: AssetDetailsProps) => {
     <div className={classes.details}>
       <AssetRate assetId={assetId} />
       <AssetChart data={data} />
-      <BSDButton title={'Trade'} onClick={() => setModalOpen(true)} />
+      <BSDButton title={'Trade'} onClick={() => setModalOpen(true)} fullWidth />
+      <TradeHistory />
       <Modal isOpen={modalOpen} onClose={() => setModalOpen(false)}>
         <form method="dialog" className={classes.form}>
           <div className={classes.inputs}>
