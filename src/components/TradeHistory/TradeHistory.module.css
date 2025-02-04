@@ -1,0 +1,21 @@
+.container {
+  background-color: var(--card-background);
+  border-radius: 12px;
+  display: flex;
+  flex-direction: column;
+  padding: 16px;
+  width: 100%;
+}
+
+.trade {
+  display: flex;
+  justify-content: space-between;
+}
+
+.amount {
+  font-weight: 600;
+}
+
+.type {
+  text-transform: capitalize;
+}
