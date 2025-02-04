@@ -6,8 +6,6 @@ const useFiatCryptoValue = (rate: number) => {
 
   const calculateRate = useCallback(
     (type: 'fiat' | 'crypto', value: string) => {
-      console.log('here');
-
       switch (type) {
         case 'fiat': {
           setFiatValue(value);

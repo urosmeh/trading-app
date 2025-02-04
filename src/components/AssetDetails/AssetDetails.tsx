@@ -1,7 +1,7 @@
 import { useGetAssetChartData } from '../../api/hooks';
 import classes from './AssetDetails.module.css';
 import AssetChart from '../AssetChart/AssetChart.tsx';
-import { useCallback, useEffect, useState } from 'react';
+import { useCallback, useState } from 'react';
 import AssetRate from '../AssetRate/AssetRate.tsx';
 import BSDButton from '../BSDButton/BSDButton.tsx';
 import BSDInput from '../BSDInput/BSDInput.tsx';
@@ -19,11 +19,7 @@ const AssetDetails = ({ assetId }: AssetDetailsProps) => {
 
   const rate = parseFloat('100993.6797');
   const { fiatValue, cryptoValue, calculateRate } = useFiatCryptoValue(rate);
-  const { addTradeHistory, tradeHistory } = useStore();
-
-  useEffect(() => {
-    console.log(tradeHistory);
-  });
+  const { addTradeHistory } = useStore();
 
   const handleTrade = useCallback(
     (type: 'buy' | 'sell') => {
@@ -56,6 +52,7 @@ const AssetDetails = ({ assetId }: AssetDetailsProps) => {
   //todo: refactor
   //todo: Add retries!!!
   //todo: fix tooltip label
+  //todo: trade history
   if (error) return <div>There's been an error</div>;
 
   return (

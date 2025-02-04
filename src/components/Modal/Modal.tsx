@@ -11,10 +11,6 @@ const Modal = ({ isOpen, onClose, children }: ModalProps) => {
   const [isModalOpen, setModalOpen] = useState(isOpen);
   const modalRef = useRef<HTMLDialogElement | null>(null);
 
-  useEffect(() => {
-    console.log(isOpen);
-  }, [isOpen]);
-
   const handleCloseModal = () => {
     if (onClose) {
       onClose();
