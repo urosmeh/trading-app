@@ -17,7 +17,6 @@
 * {
   font-family: 'Open Sans', sans-serif;
   color: var(--font);
-  /*font-size: 1vw;*/
 }
 
 p {
@@ -30,10 +29,8 @@ body {
 }
 
 body {
-  /*width: 100%;*/
   margin: 0;
-  /*display: flex;*/
-  /*place-items: start;*/
+  font-size: clamp(12px, 1vw + 0.5rem, 18px);
   min-width: 320px;
   min-height: 100vh;
   background-color: var(--background);

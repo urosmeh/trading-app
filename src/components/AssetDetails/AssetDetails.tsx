@@ -153,7 +153,7 @@ const AssetDetails = ({ assetId }: AssetDetailsProps) => {
         onClick={() => {
           setModalOpen(true);
         }}
-        fullWidth
+        className={classes.tradeBtn}
       />
       <TradeHistory assetId={assetId} />
       <Modal
@@ -208,14 +208,12 @@ const AssetDetails = ({ assetId }: AssetDetailsProps) => {
               onClick={handleSubmit((data) => {
                 submitTrade({ ...data, type: 'buy' });
               })}
-              fullWidth
             />
             <BSDButton
               title={'Sell'}
               onClick={handleSubmit((data) => {
                 submitTrade({ ...data, type: 'sell' });
               })}
-              fullWidth
             />
           </div>
         </form>
