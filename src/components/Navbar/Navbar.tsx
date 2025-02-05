@@ -4,6 +4,7 @@ import useStore from '../../stores/useStore.ts';
 
 const Navbar = () => {
   const { funds } = useStore();
+  const assets = Object.keys(funds).filter((k) => k !== 'fiat');
 
   return (
     <nav className={classes.navbar}>
@@ -12,8 +13,12 @@ const Navbar = () => {
       </div>
       <div className={classes.funds}>
         <p>Available</p>
-        <p>{funds.btc} BTC</p>
-        <p>{funds.fiat}</p>
+        <p>{funds.fiat} €</p>
+        {assets.map((assetKey) => (
+          <p key={assetKey}>
+            {funds[assetKey]} {assetKey}
+          </p>
+        ))}
       </div>
     </nav>
   );

@@ -10,6 +10,8 @@ import useFiatCryptoValue from '../../hooks/useFiatCryptoValue.ts';
 import useStore from '../../stores/useStore.ts';
 import TradeHistory from '../TradeHistory/TradeHistory.tsx';
 import { SubmitHandler, useForm } from 'react-hook-form';
+import { zodResolver } from '@hookform/resolvers/zod';
+import { TradeSchema, tradeSchema } from '../../schemas/trade.schema.ts';
 
 type AssetDetailsProps = {
   assetId: string;
@@ -22,6 +24,8 @@ const defaultValues = {
 
 type TradeForm = typeof defaultValues;
 
+const tradeResolver = zodResolver(tradeSchema);
+
 const AssetDetails = ({ assetId }: AssetDetailsProps) => {
   const [modalOpen, setModalOpen] = useState(false);
   const { data, isLoading, error, refetch } = useGetAssetChartData(assetId);
@@ -30,20 +34,24 @@ const AssetDetails = ({ assetId }: AssetDetailsProps) => {
   const rate = parseFloat(rateData?.rateUsd || '0');
   const assetAbbr = rateData?.symbol || assetId;
 
-  const { fiatValue, cryptoValue, calculateRate, reset } =
-    useFiatCryptoValue(rate);
-  const { addTradeHistory } = useStore();
+  const { handleSubmit, register, reset, setError, formState, setValue } =
+    useForm<TradeSchema>({ resolver: tradeResolver, mode: 'onBlur' });
 
   const {
-    handleSubmit,
-    register,
-    reset: resetForm,
-    formState,
-    clearErrors,
-  } = useForm<TradeForm>({
-    defaultValues,
-    mode: 'onBlur',
-  });
+    fiatValue,
+    cryptoValue,
+    calculateRate,
+    setFiatValue,
+    setCryptoValue,
+  } = useFiatCryptoValue(rate, setValue);
+
+  const { addTradeHistory, funds, updateFunds } = useStore();
+
+  const resetForm = () => {
+    reset();
+    setFiatValue(defaultValues.fiatValue);
+    setCryptoValue(defaultValues.cryptoValue);
+  };
 
   const handleTrade = useCallback(
     (type: 'buy' | 'sell') => {
@@ -53,6 +61,22 @@ const AssetDetails = ({ assetId }: AssetDetailsProps) => {
         type === 'buy' ? parseFloat(fiatValue) : parseFloat(cryptoValue);
       const buyAmount =
         type === 'buy' ? parseFloat(cryptoValue) : parseFloat(fiatValue);
+
+      if (type === 'buy' && funds.fiat < sellAmount) {
+        setError('root', {
+          message: 'Insufficient funds (€)',
+        });
+        return;
+      }
+
+      const assetFunds = funds[assetAbbr] || 0;
+
+      if (type === 'sell' && sellAmount > assetFunds) {
+        setError('root', {
+          message: `Insufficient funds (${assetAbbr})`,
+        });
+        return;
+      }
 
       addTradeHistory({
         type,
@@ -65,10 +89,32 @@ const AssetDetails = ({ assetId }: AssetDetailsProps) => {
         buyAmount,
       });
 
-      reset();
+      if (type === 'buy') {
+        if (!Object.keys(funds).includes(assetAbbr)) {
+          updateFunds({
+            ...funds,
+            fiat: funds.fiat - sellAmount,
+            [assetAbbr]: buyAmount,
+          });
+        } else {
+          updateFunds({
+            ...funds,
+            fiat: funds.fiat - sellAmount,
+            [assetAbbr]: funds[assetAbbr] + buyAmount,
+          });
+        }
+      } else {
+        updateFunds({
+          ...funds,
+          fiat: funds.fiat + buyAmount,
+          [assetAbbr]: funds[assetAbbr] - sellAmount,
+        });
+      }
+
+      resetForm();
       setModalOpen(false);
     },
-    [cryptoValue, fiatValue, assetId, addTradeHistory, rate, reset, assetAbbr]
+    [cryptoValue, fiatValue, assetId, addTradeHistory, rate, assetAbbr]
   );
 
   if (isLoading) return <div>Loading...</div>;
@@ -89,10 +135,7 @@ const AssetDetails = ({ assetId }: AssetDetailsProps) => {
     event
   ) => {
     event?.preventDefault();
-    if (formState.isValid) {
-      handleTrade(formData.type);
-      resetForm();
-    }
+    handleTrade(formData.type);
   };
 
   const isFiatInvalid =
@@ -113,27 +156,20 @@ const AssetDetails = ({ assetId }: AssetDetailsProps) => {
         fullWidth
       />
       <TradeHistory assetId={assetId} />
-      <Modal isOpen={modalOpen} onClose={() => setModalOpen(false)}>
+      <Modal
+        isOpen={modalOpen}
+        onClose={() => {
+          resetForm();
+          setModalOpen(false);
+        }}
+      >
         <form method="dialog" className={classes.form}>
           <div className={classes.inputs}>
             <BSDInput
+              key={'fiatValue'}
               {...register('fiatValue', {
-                onChange: async (event: ChangeEvent<HTMLInputElement>) => {
+                onChange: (event: ChangeEvent<HTMLInputElement>) => {
                   calculateRate('fiat', event.target.value);
-                  clearErrors('cryptoValue');
-                },
-                pattern: {
-                  value: /^[0-9]*\.?[0-9]*$/, // numbers and decimals
-                  message: 'Only numbers are allowed',
-                },
-                required: true,
-                min: {
-                  value: 0.0,
-                  message: 'Value must be greater ',
-                },
-                max: {
-                  value: 10000,
-                  message: 'Value must not exceed 10,000',
                 },
               })}
               currency={'EUR'}
@@ -142,23 +178,10 @@ const AssetDetails = ({ assetId }: AssetDetailsProps) => {
             />
 
             <BSDInput
+              key={'cryptoValue'}
               {...register('cryptoValue', {
-                onChange: async (event: ChangeEvent<HTMLInputElement>) => {
+                onChange: (event: ChangeEvent<HTMLInputElement>) => {
                   calculateRate('crypto', event.target.value);
-                  clearErrors('fiatValue');
-                },
-                pattern: {
-                  value: /^[0-9]*\.?[0-9]*$/, // numbers and decimals
-                  message: 'Only numbers are allowed',
-                },
-                required: true,
-                min: {
-                  value: 0.0,
-                  message: 'Value must be at least 1',
-                },
-                max: {
-                  value: 10000,
-                  message: 'Value must not exceed 10,000',
                 },
               })}
               currency={assetAbbr}
@@ -176,19 +199,22 @@ const AssetDetails = ({ assetId }: AssetDetailsProps) => {
               {assetAbbr}: {formState.errors.cryptoValue?.message}
             </p>
           )}
+          {formState.errors.root?.message && (
+            <p className={classes.errors}>{formState.errors.root?.message}</p>
+          )}
           <div className={classes.actions}>
             <BSDButton
               title={'Buy'}
-              onClick={handleSubmit((data) =>
-                submitTrade({ ...data, type: 'buy' })
-              )}
+              onClick={handleSubmit((data) => {
+                submitTrade({ ...data, type: 'buy' });
+              })}
               fullWidth
             />
             <BSDButton
               title={'Sell'}
-              onClick={handleSubmit((data) =>
-                submitTrade({ ...data, type: 'sell' })
-              )}
+              onClick={handleSubmit((data) => {
+                submitTrade({ ...data, type: 'sell' });
+              })}
               fullWidth
             />
           </div>
