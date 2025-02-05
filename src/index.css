@@ -32,7 +32,6 @@ body {
   margin: 0;
   font-size: clamp(12px, 1vw + 0.5rem, 18px);
   min-width: 320px;
-  /*min-height: 100vh;*/
   background-color: var(--background);
 }
 
