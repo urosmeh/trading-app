@@ -27,7 +27,7 @@ const AssetRate = ({ assetId }: AssetRateProps) => {
   }
 
   const pnl = getAssetPnL(assetId, parseFloat(data?.rateUsd || '1'));
-  const pnlStr = pnl.toFixed(1);
+  const pnlStr = pnl.toFixed(2);
 
   return (
     <div>

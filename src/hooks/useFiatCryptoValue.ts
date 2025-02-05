@@ -1,46 +1,52 @@
-import { useCallback, useState } from 'react';
+import { useState } from 'react';
+import { UseFormSetValue } from 'react-hook-form';
+import { TradeSchema } from '../schemas/trade.schema.ts';
+// import { useCallback, useState } from 'react';
 
-const useFiatCryptoValue = (rate: number) => {
+const useFiatCryptoValue = (
+  rate: number,
+  setValue: UseFormSetValue<TradeSchema>
+) => {
   const [fiatValue, setFiatValue] = useState('');
   const [cryptoValue, setCryptoValue] = useState('');
 
-  const calculateRate = useCallback(
-    (type: 'fiat' | 'crypto', value: string) => {
-      switch (type) {
-        case 'fiat': {
-          setFiatValue(value);
-          if (isNaN(parseFloat(value))) {
-            setCryptoValue('');
-            break;
-          }
-          setCryptoValue((parseFloat(value) / rate).toFixed(6).toString());
+  const calculateRate = (type: 'fiat' | 'crypto', value: string) => {
+    switch (type) {
+      case 'fiat': {
+        setFiatValue(value);
+        setValue('fiatValue', value);
+        if (isNaN(parseFloat(value))) {
+          setCryptoValue('');
           break;
         }
-
-        case 'crypto': {
-          setCryptoValue(value);
-          if (isNaN(parseFloat(value))) {
-            setFiatValue('');
-            break;
-          }
-          setFiatValue((parseFloat(value) * rate).toFixed(6).toString());
-          break;
-        }
+        const val = (parseFloat(value) / rate).toFixed(6).toString();
+        setCryptoValue(val);
+        setValue('cryptoValue', val);
+        break;
       }
-    },
-    [rate]
-  );
 
-  const reset = useCallback(() => {
-    setCryptoValue('');
-    setFiatValue('');
-  }, []);
+      case 'crypto': {
+        setCryptoValue(value);
+        setValue('cryptoValue', value);
+        if (isNaN(parseFloat(value))) {
+          setFiatValue('');
+          setValue('fiatValue', '');
+          break;
+        }
+        const val = (parseFloat(value) * rate).toFixed(6).toString();
+        setFiatValue(val);
+        setValue('fiatValue', val);
+        break;
+      }
+    }
+  };
 
   return {
     cryptoValue,
     fiatValue,
     calculateRate,
-    reset,
+    setCryptoValue,
+    setFiatValue,
   };
 };
 

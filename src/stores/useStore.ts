@@ -2,7 +2,7 @@ import { create } from 'zustand';
 
 type Funds = {
   fiat: number;
-  btc: number;
+  [key: string]: number;
 };
 
 export type Trade = {
@@ -25,12 +25,9 @@ type StoreState = {
   getAssetPnL: (assetId: string, currentRate: number) => number;
 };
 
-//todo: real funds
-
 const useStore = create<StoreState>((set, get) => ({
   funds: {
     fiat: 10000,
-    btc: 1,
   },
   updateFunds: (newFunds: Funds) => set({ funds: newFunds }),
   tradeHistory: [],
