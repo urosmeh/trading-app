@@ -8,13 +8,19 @@ type BSDButtonProps = HTMLAttributes<HTMLButtonElement> & {
   disabled?: boolean;
 };
 
-const BSDButton = ({ title, fullWidth, disabled }: BSDButtonProps) => {
+const BSDButton = ({
+  title,
+  fullWidth,
+  disabled,
+  ...props
+}: BSDButtonProps) => {
   return (
     <button
       className={classNames(
         classes.button,
         fullWidth ? classes.fullWidth : undefined
       )}
+      {...props}
       disabled={disabled}
     >
       {title}

@@ -7,6 +7,10 @@
   justify-content: space-between;
 }
 
+.error {
+  border: 1px solid var(--error);
+}
+
 .inputField {
   flex: 1;
   border: none;
