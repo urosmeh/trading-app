@@ -1,9 +1,9 @@
-import './App.css';
-import HomePage from './pages/HomePage/HomePage.tsx';
+import '@/App.css';
+import HomePage from '@/pages/HomePage/HomePage.tsx';
 import { BrowserRouter, Route, Routes } from 'react-router';
-import { AppRoutes } from './constants/appRoutes.ts';
-import AssetPage from './pages/AssetPage/AssetPage.tsx';
-import Navbar from './components/Navbar/Navbar.tsx';
+import { AppRoutes } from '@/constants/appRoutes.ts';
+import AssetPage from '@/pages/AssetPage/AssetPage.tsx';
+import Navbar from '@/components/Navbar/Navbar.tsx';
 
 function App() {
   return (

@@ -1,19 +1,19 @@
-import { useGetAssetChartData, useGetAssetRate } from '../../api/hooks';
+import { useGetAssetChartData, useGetAssetRate } from '@/api/hooks';
 import classes from './AssetDetails.module.css';
-import AssetChart from '../AssetChart/AssetChart.tsx';
+import AssetChart from '@/components/AssetChart/AssetChart.tsx';
 import { ChangeEvent, useCallback, useState } from 'react';
-import AssetRate from '../AssetRate/AssetRate.tsx';
-import BSDButton from '../BSDButton/BSDButton.tsx';
-import BSDInput from '../BSDInput/BSDInput.tsx';
-import Modal from '../Modal/Modal.tsx';
-import useFiatCryptoValue from '../../hooks/useFiatCryptoValue.ts';
-import useStore from '../../stores/useStore.ts';
-import TradeHistory from '../TradeHistory/TradeHistory.tsx';
+import AssetRate from '@/components/AssetRate/AssetRate.tsx';
+import BSDButton from '@/components/BSDButton/BSDButton.tsx';
+import BSDInput from '@/components/BSDInput/BSDInput.tsx';
+import Modal from '@/components/Modal/Modal.tsx';
+import useFiatCryptoValue from '@/hooks/useFiatCryptoValue.ts';
+import useStore from '@/stores/useStore.ts';
+import TradeHistory from '@/components/TradeHistory/TradeHistory.tsx';
 import { SubmitHandler, useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
-import { TradeSchema, tradeSchema } from '../../schemas/trade.schema.ts';
-import Loading from '../Loading/Loading.tsx';
-import ErrorRetry from '../ErrorRetry/ErrorRetry.tsx';
+import { TradeSchema, tradeSchema } from '@/schemas/trade.schema.ts';
+import Loading from '@/components/Loading/Loading.tsx';
+import ErrorRetry from '@/components/ErrorRetry/ErrorRetry.tsx';
 
 type AssetDetailsProps = {
   assetId: string;

@@ -8,13 +8,13 @@ import {
 } from 'recharts';
 import classes from './AssetChart.module.css';
 import { SVGProps } from 'react';
-import { ChartHistoryEventList } from '../../models/coincap.ts';
+import { ChartHistoryEventList } from '@/models/coincap.ts';
 import {
   NameType,
   ValueType,
 } from 'recharts/types/component/DefaultTooltipContent';
-import { formatTime } from '../../utils/timeUtils.ts';
-import { formatNumber } from '../../utils/stringUtils.ts';
+import { formatTime } from '@/utils/timeUtils.ts';
+import { formatNumber } from '@/utils/stringUtils.ts';
 
 type AssetChartProps = {
   data?: ChartHistoryEventList;
