@@ -1,5 +1,5 @@
-import { formatTime } from '../../utils/timeUtils.ts';
-import useStore, { Trade } from '../../stores/useStore.ts';
+import { formatTime } from '@/utils/timeUtils.ts';
+import useStore, { Trade } from '@/stores/useStore.ts';
 import classes from './TradeHistory.module.css';
 
 type TradeHistoryProps = {

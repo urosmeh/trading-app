@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { UseFormSetValue } from 'react-hook-form';
-import { TradeSchema } from '../schemas/trade.schema.ts';
+import { TradeSchema } from '@/schemas/trade.schema.ts';
 
 const useFiatCryptoValue = (
   rate: number,
