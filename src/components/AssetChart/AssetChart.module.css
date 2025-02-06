@@ -1,8 +1,37 @@
 .chart {
-  /*try without this*/
-  /*margin: 24px;*/
-  width: 90% !important;
+  min-height: 250px;
   height: 33% !important;
-  /*width: 400px !important;*/
-  /*height: 200px !important;*/
+}
+
+.tooltip {
+  background-color: var(--tooltip-background);
+  border-radius: 4px;
+  display: flex;
+}
+
+.tooltip :first-child {
+  border-right: 2px solid var(--tooltip-font);
+}
+
+.tooltip p {
+  color: var(--tooltip-font);
+  padding: 4px;
+}
+
+@media (min-width: 480px) {
+  .chart {
+    width: 75% !important;
+  }
+}
+
+@media (min-width: 768px) {
+  .chart {
+    width: 60% !important;
+  }
+}
+
+@media (min-width: 1280px) {
+  .chart {
+    width: 50% !important;
+  }
 }

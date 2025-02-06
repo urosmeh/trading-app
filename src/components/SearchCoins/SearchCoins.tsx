@@ -1,4 +1,5 @@
 import { Dispatch, SetStateAction } from 'react';
+import classes from './SearchCoins.module.css';
 
 type SearchCoinsProps = {
   search: string;
@@ -7,10 +8,11 @@ type SearchCoinsProps = {
 
 const SearchCoins = ({ search, setSearch }: SearchCoinsProps) => {
   return (
-    <div>
+    <div className={classes.container}>
       <p>Search for a coin to trade (i.e ethereum)</p>
 
       <input
+        className={classes.input}
         type="text"
         value={search}
         onChange={(e) => setSearch(e.target.value)}

@@ -4,22 +4,19 @@ import { HTMLAttributes, memo } from 'react';
 
 type BSDButtonProps = HTMLAttributes<HTMLButtonElement> & {
   title: string;
-  fullWidth?: boolean;
   disabled?: boolean;
+  className?: string;
 };
 
 const BSDButton = ({
   title,
-  fullWidth,
   disabled,
+  className = '',
   ...props
 }: BSDButtonProps) => {
   return (
     <button
-      className={classNames(
-        classes.button,
-        fullWidth ? classes.fullWidth : undefined
-      )}
+      className={classNames(classes.button, className)}
       {...props}
       disabled={disabled}
     >

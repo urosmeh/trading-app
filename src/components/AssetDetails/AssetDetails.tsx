@@ -12,14 +12,16 @@ import TradeHistory from '../TradeHistory/TradeHistory.tsx';
 import { SubmitHandler, useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { TradeSchema, tradeSchema } from '../../schemas/trade.schema.ts';
+import Loading from '../Loading/Loading.tsx';
+import ErrorRetry from '../ErrorRetry/ErrorRetry.tsx';
 
 type AssetDetailsProps = {
   assetId: string;
 };
 
 const defaultValues = {
-  cryptoValue: '0',
-  fiatValue: '0',
+  cryptoValue: '',
+  fiatValue: '',
 };
 
 type TradeForm = typeof defaultValues;
@@ -47,11 +49,11 @@ const AssetDetails = ({ assetId }: AssetDetailsProps) => {
 
   const { addTradeHistory, funds, updateFunds } = useStore();
 
-  const resetForm = () => {
+  const resetForm = useCallback(() => {
     reset();
     setFiatValue(defaultValues.fiatValue);
     setCryptoValue(defaultValues.cryptoValue);
-  };
+  }, [reset, setCryptoValue, setFiatValue]);
 
   const handleTrade = useCallback(
     (type: 'buy' | 'sell') => {
@@ -114,21 +116,25 @@ const AssetDetails = ({ assetId }: AssetDetailsProps) => {
       resetForm();
       setModalOpen(false);
     },
-    [cryptoValue, fiatValue, assetId, addTradeHistory, rate, assetAbbr]
+    [
+      cryptoValue,
+      fiatValue,
+      assetId,
+      addTradeHistory,
+      rate,
+      assetAbbr,
+      funds,
+      resetForm,
+      setError,
+      updateFunds,
+    ]
   );
 
-  if (isLoading) return <div>Loading...</div>;
+  if (isLoading) return <Loading />;
 
   //todo: refactor
-  //todo: fix tooltip label
 
-  if (error)
-    return (
-      <div>
-        <p>There's been an error</p>
-        <BSDButton onClick={() => refetch} title={'Retry'} />
-      </div>
-    );
+  if (error) return <ErrorRetry refetch={refetch} />;
 
   const submitTrade: SubmitHandler<TradeForm & { type: 'buy' | 'sell' }> = (
     formData,
@@ -153,7 +159,7 @@ const AssetDetails = ({ assetId }: AssetDetailsProps) => {
         onClick={() => {
           setModalOpen(true);
         }}
-        fullWidth
+        className={classes.tradeBtn}
       />
       <TradeHistory assetId={assetId} />
       <Modal
@@ -208,14 +214,12 @@ const AssetDetails = ({ assetId }: AssetDetailsProps) => {
               onClick={handleSubmit((data) => {
                 submitTrade({ ...data, type: 'buy' });
               })}
-              fullWidth
             />
             <BSDButton
               title={'Sell'}
               onClick={handleSubmit((data) => {
                 submitTrade({ ...data, type: 'sell' });
               })}
-              fullWidth
             />
           </div>
         </form>

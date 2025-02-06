@@ -7,18 +7,13 @@ import Navbar from './components/Navbar/Navbar.tsx';
 
 function App() {
   return (
-    <>
+    <BrowserRouter>
       <Navbar />
-      <BrowserRouter>
-        <Routes>
-          <Route path={AppRoutes.HOME} element={<HomePage />} />
-          <Route
-            path={`${AppRoutes.ASSETS}/:assetId`}
-            element={<AssetPage />}
-          />
-        </Routes>
-      </BrowserRouter>
-    </>
+      <Routes>
+        <Route path={AppRoutes.HOME} element={<HomePage />} />
+        <Route path={`${AppRoutes.ASSETS}/:assetId`} element={<AssetPage />} />
+      </Routes>
+    </BrowserRouter>
   );
 }
 

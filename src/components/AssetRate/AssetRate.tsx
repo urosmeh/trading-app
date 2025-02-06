@@ -1,8 +1,10 @@
 import { useGetAssetRate } from '../../api/hooks';
 import useStore from '../../stores/useStore.ts';
-import BSDButton from '../BSDButton/BSDButton.tsx';
 import classes from './AssetRate.module.css';
 import classNames from 'classnames';
+import Loading from '../Loading/Loading.tsx';
+import ErrorRetry from '../ErrorRetry/ErrorRetry.tsx';
+import { formatNumber } from '../../utils/stringUtils.ts';
 
 type AssetRateProps = {
   assetId: string;
@@ -13,28 +15,19 @@ const AssetRate = ({ assetId }: AssetRateProps) => {
   const { getAssetPnL } = useStore();
 
   if (isLoading) {
-    return <div>Loading rates...</div>;
+    return <Loading />;
   }
 
-  if (error) {
-    //todo: add retry button
-    return (
-      <div>
-        <p>There's been an error fetching rate.</p>
-        <BSDButton title={'Retry'} onClick={() => refetch} />
-      </div>
-    );
-  }
+  if (error)
+    return <ErrorRetry text={'Cannot retrieve rates'} refetch={refetch} />;
 
   const pnl = getAssetPnL(assetId, parseFloat(data?.rateUsd || '1'));
-  const pnlStr = pnl.toFixed(2);
+  const pnlStr = formatNumber(pnl);
 
   return (
     <div>
       <p className={classes.text}>{data?.symbol}</p>
-      <p className={classes.text}>
-        {parseFloat(data?.rateUsd || '1').toFixed(2)} $
-      </p>
+      <p className={classes.text}>{formatNumber(data?.rateUsd || '1')} $</p>
       {
         <p>
           PnL:
