@@ -3,6 +3,7 @@ import useStore from '../../stores/useStore.ts';
 import BSDButton from '../BSDButton/BSDButton.tsx';
 import classes from './AssetRate.module.css';
 import classNames from 'classnames';
+import Loading from '../Loading/Loading.tsx';
 
 type AssetRateProps = {
   assetId: string;
@@ -13,7 +14,7 @@ const AssetRate = ({ assetId }: AssetRateProps) => {
   const { getAssetPnL } = useStore();
 
   if (isLoading) {
-    return <div>Loading rates...</div>;
+    return <Loading />;
   }
 
   if (error) {

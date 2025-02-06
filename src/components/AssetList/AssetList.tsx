@@ -3,6 +3,7 @@ import { NavLink } from 'react-router';
 import { AppRoutes } from '../../constants/appRoutes.ts';
 import { Fragment } from 'react';
 import classes from './AssetList.module.css';
+import Loading from '../Loading/Loading.tsx';
 
 type AssetListProps = {
   search: string;
@@ -13,9 +14,8 @@ const AssetList = ({ search }: AssetListProps) => {
 
   if (!search) return null;
 
-  //todo: Loading states !!!
   if (isLoading) {
-    return <div>loading..</div>;
+    return <Loading />;
   }
 
   if (error) {

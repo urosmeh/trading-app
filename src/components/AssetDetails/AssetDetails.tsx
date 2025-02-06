@@ -12,14 +12,15 @@ import TradeHistory from '../TradeHistory/TradeHistory.tsx';
 import { SubmitHandler, useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { TradeSchema, tradeSchema } from '../../schemas/trade.schema.ts';
+import Loading from '../Loading/Loading.tsx';
 
 type AssetDetailsProps = {
   assetId: string;
 };
 
 const defaultValues = {
-  cryptoValue: '0',
-  fiatValue: '0',
+  cryptoValue: '',
+  fiatValue: '',
 };
 
 type TradeForm = typeof defaultValues;
@@ -47,11 +48,11 @@ const AssetDetails = ({ assetId }: AssetDetailsProps) => {
 
   const { addTradeHistory, funds, updateFunds } = useStore();
 
-  const resetForm = () => {
+  const resetForm = useCallback(() => {
     reset();
     setFiatValue(defaultValues.fiatValue);
     setCryptoValue(defaultValues.cryptoValue);
-  };
+  }, [reset, setCryptoValue, setFiatValue]);
 
   const handleTrade = useCallback(
     (type: 'buy' | 'sell') => {
@@ -114,10 +115,21 @@ const AssetDetails = ({ assetId }: AssetDetailsProps) => {
       resetForm();
       setModalOpen(false);
     },
-    [cryptoValue, fiatValue, assetId, addTradeHistory, rate, assetAbbr]
+    [
+      cryptoValue,
+      fiatValue,
+      assetId,
+      addTradeHistory,
+      rate,
+      assetAbbr,
+      funds,
+      resetForm,
+      setError,
+      updateFunds,
+    ]
   );
 
-  if (isLoading) return <div>Loading...</div>;
+  if (isLoading) return <Loading />;
 
   //todo: refactor
   //todo: fix tooltip label
