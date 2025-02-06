@@ -1,10 +1,37 @@
-import { Area, AreaChart, ResponsiveContainer, Tooltip, YAxis } from 'recharts';
+import {
+  Area,
+  AreaChart,
+  ResponsiveContainer,
+  Tooltip,
+  TooltipProps,
+  YAxis,
+} from 'recharts';
 import classes from './AssetChart.module.css';
 import { SVGProps } from 'react';
 import { ChartHistoryEventList } from '../../models/coincap.ts';
+import {
+  NameType,
+  ValueType,
+} from 'recharts/types/component/DefaultTooltipContent';
+import { formatTime } from '../../utils/timeUtils.ts';
 
 type AssetChartProps = {
   data?: ChartHistoryEventList;
+};
+
+const AssetTooltip = ({
+  active,
+  payload,
+}: TooltipProps<ValueType, NameType>) => {
+  if (active && payload && payload.length) {
+    return (
+      <div>
+        <p>{`price : ${payload[0].value}`}</p>
+        <p>{`time : ${formatTime(payload[0].payload?.time)}`}</p>
+      </div>
+    );
+  }
+  return null;
 };
 
 const AssetChart = ({ data }: AssetChartProps) => {
@@ -55,7 +82,7 @@ const AssetChart = ({ data }: AssetChartProps) => {
           stroke="#287979"
           fill="url(#gradient)"
         />
-        <Tooltip />
+        <Tooltip content={(props) => <AssetTooltip {...props} />} />
       </AreaChart>
     </ResponsiveContainer>
   );
