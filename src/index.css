@@ -12,6 +12,8 @@
   --error: #f64242;
   --pnl-loss: var(--error);
   --disabled: #505050;
+  --tooltip-background: #3fbebe;
+  --tooltip-font: var(--background);
 }
 
 * {

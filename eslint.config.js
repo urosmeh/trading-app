@@ -13,7 +13,6 @@ export default tseslint.config(
       js.configs.recommended,
       ...tseslint.configs.recommended,
       eslintConfigPrettier,
-      // tanstackQuery,
     ],
     files: ['**/*.{ts,tsx}'],
     languageOptions: {

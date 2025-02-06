@@ -14,6 +14,7 @@ import {
   ValueType,
 } from 'recharts/types/component/DefaultTooltipContent';
 import { formatTime } from '../../utils/timeUtils.ts';
+import { formatNumber } from '../../utils/stringUtils.ts';
 
 type AssetChartProps = {
   data?: ChartHistoryEventList;
@@ -24,10 +25,12 @@ const AssetTooltip = ({
   payload,
 }: TooltipProps<ValueType, NameType>) => {
   if (active && payload && payload.length) {
+    const val = Number(payload[0].value);
+
     return (
-      <div>
-        <p>{`price : ${payload[0].value}`}</p>
-        <p>{`time : ${formatTime(payload[0].payload?.time)}`}</p>
+      <div className={classes.tooltip}>
+        <p>{`${formatTime(payload[0].payload?.time)}`}</p>
+        <p>{`${formatNumber(val)}`}</p>
       </div>
     );
   }
@@ -71,7 +74,6 @@ const AssetChart = ({ data }: AssetChartProps) => {
           dataKey={'priceUsd'}
           tick={CustomYTick}
           tickCount={10}
-          // overflow={'visible'}
           domain={([min, max]) => {
             return [min, max];
           }}
@@ -89,22 +91,14 @@ const AssetChart = ({ data }: AssetChartProps) => {
 };
 
 const CustomYTick = (
-  props: SVGProps<SVGSVGElement> & { payload: { value: string } }
+  props: SVGProps<SVGSVGElement> & { payload: { value: number } }
 ) => {
   const { x, y, payload } = props;
 
   return (
     <g transform={`translate(${x}, ${y})`}>
-      <text
-        x={0}
-        y={0}
-        dy={0}
-        fill="#0d2828"
-        fontSize={15}
-        fontWeight={600}
-        fontFamily={'Open Sans'}
-      >
-        {payload.value}
+      <text x={0} y={0} dy={0} fill="#287979" fontFamily={'Open Sans'}>
+        {formatNumber(payload.value)}
       </text>
     </g>
   );

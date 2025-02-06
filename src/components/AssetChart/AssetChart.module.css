@@ -3,6 +3,21 @@
   height: 33% !important;
 }
 
+.tooltip {
+  background-color: var(--tooltip-background);
+  border-radius: 4px;
+  display: flex;
+}
+
+.tooltip :first-child {
+  border-right: 2px solid var(--tooltip-font);
+}
+
+.tooltip p {
+  color: var(--tooltip-font);
+  padding: 4px;
+}
+
 @media (min-width: 480px) {
   .chart {
     width: 75% !important;

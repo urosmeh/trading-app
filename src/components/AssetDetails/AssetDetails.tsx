@@ -133,7 +133,6 @@ const AssetDetails = ({ assetId }: AssetDetailsProps) => {
   if (isLoading) return <Loading />;
 
   //todo: refactor
-  //todo: fix tooltip label
 
   if (error) return <ErrorRetry refetch={refetch} />;
 
