@@ -13,6 +13,7 @@ import { SubmitHandler, useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { TradeSchema, tradeSchema } from '../../schemas/trade.schema.ts';
 import Loading from '../Loading/Loading.tsx';
+import ErrorRetry from '../ErrorRetry/ErrorRetry.tsx';
 
 type AssetDetailsProps = {
   assetId: string;
@@ -134,13 +135,7 @@ const AssetDetails = ({ assetId }: AssetDetailsProps) => {
   //todo: refactor
   //todo: fix tooltip label
 
-  if (error)
-    return (
-      <div>
-        <p>There's been an error</p>
-        <BSDButton onClick={() => refetch} title={'Retry'} />
-      </div>
-    );
+  if (error) return <ErrorRetry refetch={refetch} />;
 
   const submitTrade: SubmitHandler<TradeForm & { type: 'buy' | 'sell' }> = (
     formData,
