@@ -10,7 +10,7 @@ const defaultText = "There's been an error";
 
 const ErrorRetry = ({ text = defaultText, refetch }: ErrorRetryProps) => {
   return (
-    <div>
+    <div data-testid={'error-retry'}>
       <p>{text}</p>
       <BSDButton onClick={refetch} title={'Retry'} />
     </div>
