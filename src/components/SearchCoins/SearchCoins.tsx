@@ -8,7 +8,7 @@ type SearchCoinsProps = {
 
 const SearchCoins = ({ search, setSearch }: SearchCoinsProps) => {
   return (
-    <div className={classes.container}>
+    <div className={classes.container} data-testid={'search-coins'}>
       <p>Search for a coin to trade (i.e ethereum)</p>
 
       <input
