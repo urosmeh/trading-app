@@ -1,0 +1,26 @@
+Packages installed:
+- react-router: for handling different pages based on url & params
+- recharts: for displaying charts
+- zod: data validation
+- react-hook-form: form validation
+- react-query: synchronizing server-side state management library
+- react-loader-spinner: loading spinner
+- classnames: easier className merging.
+
+In the task description for this test, it was not specified for the app to include asset search, but I added it to improve
+user experience and to make app easier to test and interactable.
+As part of that, I also added "Back to search" link to navbar (if user is not on the home page).
+
+I only wrote some tests, not for all components.
+
+It was unclear in task description how navbar funds should be shown, so I display all funds user has.
+In example, if user buys 1 eth and 0.01 btc it will show both in navbar. It is not optimized for showing a lot of different funds.
+
+Real-time price chart:
+- refetching data every 10 seconds (changes may not be visible as I think CoinCap api doesn't change historical prices as often.
+- rate also refetches every 10 seconds.
+
+Performance optimization is done by caching data with react-query and using useCallback and memo. LazyLoading could be added as well, if app was bigger.
+Debounced input is also implemented.
+
+Error handling is handled by react-query as well (api). in case of error, an ErrorRetry component will be rendered allowing user to retry api call.
