@@ -5,7 +5,7 @@
 
 This is a Vite + React + TypeScript app implementing a trading-app. The app allows searching for various crypto assets, seeing its charts and mocks trading experience
 
-Note for a reviewer: please check `notes.txt`._
+Note for a reviewer: please check `notes.txt`.
 
 ## Installation
 ### Prerequisites
@@ -21,7 +21,7 @@ npm install
 ```bash
 npm run dev
 ```
-### 5. visit the app in broser:
+### 5. visit the app in browser:
 [Open link - http://localhost:5173](http://localhost:5173)
 
 ### 6. run the tests (optional):
