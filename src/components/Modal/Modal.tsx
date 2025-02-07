@@ -1,11 +1,7 @@
-import { PropsWithChildren, useEffect, useRef, useState } from 'react';
-import CloseIcon from '../../assets/closeIcon.svg';
+import { useEffect, useRef, useState } from 'react';
+import CloseIcon from '@/assets/closeIcon.svg';
 import classes from './Modal.module.css';
-
-type ModalProps = PropsWithChildren & {
-  isOpen: boolean;
-  onClose?: () => void;
-};
+import { ModalProps } from '@/types';
 
 const Modal = ({ isOpen, onClose, children }: ModalProps) => {
   const [isModalOpen, setModalOpen] = useState(isOpen);

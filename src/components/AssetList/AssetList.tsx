@@ -1,10 +1,10 @@
-import { useGetAssets } from '../../api/hooks';
+import { useGetAssets } from '@/api/hooks';
 import { NavLink } from 'react-router';
-import { AppRoutes } from '../../constants/appRoutes.ts';
+import { AppRoutes } from '@/constants/appRoutes.ts';
 import { Fragment } from 'react';
 import classes from './AssetList.module.css';
-import Loading from '../Loading/Loading.tsx';
-import ErrorRetry from '../ErrorRetry/ErrorRetry.tsx';
+import Loading from '@/components/Loading/Loading.tsx';
+import ErrorRetry from '@/components/ErrorRetry/ErrorRetry.tsx';
 
 type AssetListProps = {
   search: string;

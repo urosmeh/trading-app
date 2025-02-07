@@ -1,4 +1,4 @@
-import BSDButton from '../BSDButton/BSDButton.tsx';
+import BSDButton from '@/components/BSDButton/BSDButton.tsx';
 import { memo } from 'react';
 
 type ErrorRetryProps = {

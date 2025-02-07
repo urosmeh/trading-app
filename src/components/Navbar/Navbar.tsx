@@ -1,8 +1,8 @@
 import classes from './Navbar.module.css';
 import { memo } from 'react';
-import useStore from '../../stores/useStore.ts';
+import useStore from '@/stores/useStore.ts';
 import { NavLink, useLocation } from 'react-router';
-import { AppRoutes } from '../../constants/appRoutes.ts';
+import { AppRoutes } from '@/constants/appRoutes.ts';
 
 const Navbar = () => {
   const { pathname } = useLocation();

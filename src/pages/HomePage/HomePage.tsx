@@ -1,8 +1,8 @@
 import { useState } from 'react';
-import useDebounce from '../../hooks/useDebounce.ts';
-import SearchCoins from '../../components/SearchCoins/SearchCoins.tsx';
-import AssetList from '../../components/AssetList/AssetList.tsx';
-import PageContainer from '../../components/PageContainer/PageContainer.tsx';
+import useDebounce from '@/hooks/useDebounce.ts';
+import SearchCoins from '@/components/SearchCoins/SearchCoins.tsx';
+import AssetList from '@/components/AssetList/AssetList.tsx';
+import PageContainer from '@/components/PageContainer/PageContainer.tsx';
 import classes from './HomePage.module.css';
 
 const HomePage = () => {

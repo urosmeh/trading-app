@@ -1,7 +1,7 @@
 import { NavLink, useParams } from 'react-router';
-import { AppRoutes } from '../../constants/appRoutes.ts';
-import AssetDetails from '../../components/AssetDetails/AssetDetails.tsx';
-import PageContainer from '../../components/PageContainer/PageContainer.tsx';
+import { AppRoutes } from '@/constants/appRoutes.ts';
+import AssetDetails from '@/components/AssetDetails/AssetDetails.tsx';
+import PageContainer from '@/components/PageContainer/PageContainer.tsx';
 
 const AssetPage = () => {
   const { assetId } = useParams();

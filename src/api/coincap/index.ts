@@ -1,11 +1,11 @@
-import { ApiRoutes } from '../../constants/apiRoutes.ts';
+import { ApiRoutes } from '@/constants/apiRoutes.ts';
 import {
   AssetList,
   ChartHistoryEventList,
   ChartIntervals,
   CoincapResponse,
   Rate,
-} from '../../models/coincap.ts';
+} from '@/models/coincap.ts';
 
 const apiUrl =
   import.meta.env.VITE_COINCAP_API_URL || 'https://api.coincap.io/v2';

@@ -1,6 +1,6 @@
 import { useQuery } from '@tanstack/react-query';
-import { getAssetChartData, getAssetRate, getAssets } from '../coincap';
-import { ChartIntervals } from '../../models/coincap.ts';
+import { getAssetChartData, getAssetRate, getAssets } from '@/api/coincap';
+import { ChartIntervals } from '@/models/coincap.ts';
 
 export const useGetAssets = (search: string) => {
   return useQuery({
