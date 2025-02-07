@@ -1,6 +1,7 @@
 import { formatTime } from '@/utils/timeUtils.ts';
-import useStore, { Trade } from '@/stores/useStore.ts';
+import { useStore } from '@/stores';
 import classes from './TradeHistory.module.css';
+import { Trade } from '@/stores/useStore.ts';
 
 type TradeHistoryProps = {
   assetId: string;
@@ -31,7 +32,7 @@ const TradeHistory = ({ assetId }: TradeHistoryProps) => {
   };
 
   return (
-    <div className={classes.container}>
+    <div className={classes.container} data-testid={'trade-history'}>
       {tradeHistory.length ? (
         tradeHistory.map((trade) => (
           <div className={classes.trade} key={trade.timestamp}>

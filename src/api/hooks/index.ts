@@ -3,10 +3,17 @@ import { getAssetChartData, getAssetRate, getAssets } from '@/api/coincap';
 import { ChartIntervals } from '@/models/coincap.ts';
 
 export const useGetAssets = (search: string) => {
-  return useQuery({
+  const { data, isLoading, error, refetch } = useQuery({
     queryKey: ['assets', search],
     queryFn: () => getAssets(search),
   });
+
+  return {
+    data,
+    isLoading,
+    error,
+    refetch,
+  };
 };
 
 export const useGetAssetChartData = (

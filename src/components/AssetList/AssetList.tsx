@@ -26,7 +26,7 @@ const AssetList = ({ search }: AssetListProps) => {
   }
 
   return (
-    <div className={classes.container}>
+    <div className={classes.container} data-testid={'asset-list'}>
       {data?.map((asset) => (
         <Fragment key={asset.id}>
           <NavLink key={asset.id} to={`${AppRoutes.ASSETS}/${asset.id}`}>

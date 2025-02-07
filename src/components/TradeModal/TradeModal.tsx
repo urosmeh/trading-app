@@ -7,7 +7,7 @@ import { SubmitHandler, useForm } from 'react-hook-form';
 import { tradeSchema, TradeSchema } from '@/schemas/trade.schema.ts';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { ModalProps } from '@/types';
-import useHandleTrade from '@/hooks/useHandleTrade.ts';
+import { useHandleTrade } from '@/hooks';
 
 const defaultValues = {
   cryptoValue: '',
