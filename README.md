@@ -1,8 +1,11 @@
 # trading-app
 
+## Preview (desktop)
+<img width="500" src="./preview.png" alt="preview">
+
 This is a Vite + React + TypeScript app implementing a trading-app. The app allows searching for various crypto assets, seeing its charts and mocks trading experience
 
-_Note for a reviewer: please check `notes.txt`._
+Note for a reviewer: please check `notes.txt`._
 
 ## Installation
 ### Prerequisites
