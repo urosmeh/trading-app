@@ -1,10 +1,4 @@
-import {
-  cleanup,
-  fireEvent,
-  getByText,
-  render,
-  screen,
-} from '@testing-library/react';
+import { cleanup, fireEvent, render, screen } from '@testing-library/react';
 import ErrorRetry from '@/components/ErrorRetry/ErrorRetry.tsx';
 
 afterEach(() => {
